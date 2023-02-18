@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 function App() {
   const [data, setData] = useState([]);
   const [color, setcolor] = useState("#080");
+  const [loading, setLoading] = useState(false);
   const getRgb = () => Math.floor(Math.random() * 256);
 
   const rgbtoHex = (r, g, b) => "#" + [r, g, b].map((x) => {
@@ -24,7 +25,7 @@ function App() {
   }
 
   const getData = async() => {
-
+    setLoading(true);
     await fetch("https://api.api-ninjas.com/v1/quotes?category=inspirational", {
       mathod: "GET",
       headers: {
@@ -36,6 +37,7 @@ function App() {
       .then((response) => { setData(response[0]) })
       .catch((err) => { console.log(err) });
     handleGenerate();
+    setLoading(false)
   }
   useEffect(() => {
     getData();
@@ -44,6 +46,7 @@ function App() {
   return (
     <div style={{ backgroundColor: color }}>
       <div className="container d-flex align-items-center justify-content-center" style={{ height: "100vh" }} >
+        {loading ? "Loading..." : 
         <div id='quote-box' className='border rounded-4 card' >
           <div className='p-5' >
             <q id='text fw-semibold' className='fs-2' style={{ color: color }}>{data.quote ? data.quote : "No Data Found"}</q>
@@ -56,7 +59,7 @@ function App() {
             </div>
             <button className='btn text-white' id="new-quote" onClick={() => { getData(); }} style={{ backgroundColor: color }}>New Quote</button>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
