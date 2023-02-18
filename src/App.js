@@ -5,11 +5,13 @@ import { faQuoteLeft, faMinus } from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useEffect, useState } from 'react';
+
 function App() {
   const [render, setRender] = useState(true);
   const [data, setData] = useState([]);
   const [color, setcolor] = useState("#080");
   const [loading, setLoading] = useState(false);
+
   const getRgb = () => Math.floor(Math.random() * 256);
 
   const rgbtoHex = (r, g, b) => "#" + [r, g, b].map((x) => {
