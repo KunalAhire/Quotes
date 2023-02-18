@@ -1,10 +1,12 @@
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faTumblr } from '@fortawesome/free-brands-svg-icons';
+import { faQuoteLeft, faMinus } from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useEffect, useState } from 'react';
 function App() {
+  const [render, setRender] = useState(true);
   const [data, setData] = useState([]);
   const [color, setcolor] = useState("#080");
   const [loading, setLoading] = useState(false);
@@ -40,7 +42,12 @@ function App() {
     setLoading(false)
   }
   useEffect(() => {
-    getData();
+    if(render){
+      getData();
+      setRender(false);
+    }
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -49,8 +56,9 @@ function App() {
         {loading ? "Loading..." : 
         <div id='quote-box' className='border rounded-4 card' >
           <div className='p-5' >
-            <q id='text fw-semibold' className='fs-2' style={{ color: color }}>{data.quote ? data.quote : "No Data Found"}</q>
-            <p id="author" style={{ marginLeft: "80%", color: color }}>- {data.author ? data.author : "No Data Found"}</p>
+          
+            <p id='text fw-semibold' className='fs-2' style={{ color: color }}><FontAwesomeIcon icon={faQuoteLeft} className="mb-2"/>{data.quote ? data.quote : "No Data Found"}</p>
+            <p id="author" style={{ marginLeft: "70%", color: color }}> <FontAwesomeIcon icon={faMinus} className="me-2"/>{data.author ? data.author : "No Data Found"}</p>
           </div>
           <div className='mb-4 d-flex justify-content-between px-4 '>
             <div>
