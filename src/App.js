@@ -23,9 +23,9 @@ function App() {
     setcolor(rgbtoHex(color.r, color.g, color.b));
   }
 
-  const getData = () => {
-    handleGenerate();
-    fetch("https://api.api-ninjas.com/v1/quotes?category=inspirational", {
+  const getData = async() => {
+
+    await fetch("https://api.api-ninjas.com/v1/quotes?category=inspirational", {
       mathod: "GET",
       headers: {
         "X-Api-Key": "4H+eZyt4euhDTRJtREjrbQ==25E1k46kO6ceMaM2",
@@ -34,7 +34,8 @@ function App() {
     })
       .then(response => response.json())
       .then((response) => { setData(response[0]) })
-      .catch((err) => { console.log(err) })
+      .catch((err) => { console.log(err) });
+    handleGenerate();
   }
   useEffect(() => {
     getData();
